@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { formatTimeAgo } from '@/lib/time';
-import { Heart, MessageCircle, Share2, Sparkles, Plus, X, Send, ChevronDown, ChevronUp, Type, HelpCircle } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Sparkles, Plus, X, Send, ChevronDown, ChevronUp, Type, HelpCircle, Lightbulb } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Link from 'next/link';
 
 interface ActOfService {
   id: number;
@@ -253,20 +254,32 @@ export default function Home() {
                 <p className="text-xs text-slate-500">Share moments that matter</p>
               </div>
             </div>
-            <Button 
-              onClick={() => setShowForm(!showForm)}
-              size="sm"
-              className={`rounded-full transition-all duration-200 ${
-                showForm 
-                  ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' 
-                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl'
-              }`}
-            >
-              {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              <span className="ml-1 hidden sm:inline">
-                {showForm ? 'Close' : 'Share'}
-              </span>
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Link href="/ideas">
+                <Button 
+                  size="sm"
+                  variant="outline"
+                  className="rounded-full border-indigo-200 text-indigo-600 hover:bg-indigo-50 transition-all duration-200"
+                >
+                  <Lightbulb className="w-4 h-4" />
+                  <span className="ml-1 hidden sm:inline">Ideas</span>
+                </Button>
+              </Link>
+              <Button 
+                onClick={() => setShowForm(!showForm)}
+                size="sm"
+                className={`rounded-full transition-all duration-200 ${
+                  showForm 
+                    ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' 
+                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl'
+                }`}
+              >
+                {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                <span className="ml-1 hidden sm:inline">
+                  {showForm ? 'Close' : 'Share'}
+                </span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -570,12 +583,23 @@ Share your story in detail! ✨"
             <p className="text-slate-600 mb-6 max-w-md mx-auto">
               Be the first to share a story of helping others and inspire more acts of service!
             </p>
-            <Button 
-              onClick={() => setShowForm(true)}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-full px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              🚀 Share First Story
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <Button 
+                onClick={() => setShowForm(true)}
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-full px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                🚀 Share First Story
+              </Button>
+              <Link href="/ideas">
+                <Button 
+                  variant="outline"
+                  className="rounded-full px-8 py-3 text-lg border-indigo-200 text-indigo-600 hover:bg-indigo-50 transition-all duration-200"
+                >
+                  <Lightbulb className="w-5 h-5 mr-2" />
+                  Get Ideas First
+                </Button>
+              </Link>
+            </div>
           </div>
         )}
       </div>

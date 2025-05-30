@@ -33,6 +33,15 @@ export function getDatabase() {
     )
   `);
 
+  // Create the user_ideas table if it doesn't exist
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS user_ideas (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      content TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
   // Add hearts column to existing tables if it doesn't exist
   try {
     db.exec(`ALTER TABLE acts_of_service ADD COLUMN hearts INTEGER DEFAULT 0`);
@@ -53,6 +62,12 @@ export interface ActOfService {
 export interface Comment {
   id: number;
   act_id: number;
+  content: string;
+  created_at: string;
+}
+
+export interface UserIdea {
+  id: number;
   content: string;
   created_at: string;
 }
@@ -112,6 +127,23 @@ export function getCommentCount(actId: number): number {
   const result = database.prepare('SELECT COUNT(*) as count FROM comments WHERE act_id = ?').get(actId);
   
   return (result as { count: number }).count;
+}
+
+export function getAllUserIdeas(): UserIdea[] {
+  const database = getDatabase();
+  const ideas = database.prepare('SELECT * FROM user_ideas ORDER BY created_at DESC').all();
+  return ideas as UserIdea[];
+}
+
+export function createUserIdea(content: string): UserIdea {
+  const database = getDatabase();
+  const now = new Date().toISOString();
+  const insert = database.prepare('INSERT INTO user_ideas (content, created_at) VALUES (?, ?)');
+  const result = insert.run(content, now);
+  
+  const newIdea = database.prepare('SELECT * FROM user_ideas WHERE id = ?').get(result.lastInsertRowid);
+  
+  return newIdea as UserIdea;
 }
 
 export default db; 
