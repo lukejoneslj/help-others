@@ -1,51 +1,143 @@
-# Help Others 🤝
+# Kindness Network 💙
 
-A platform for sharing and celebrating acts of kindness and service to others.
-
-## Overview
-
-Help Others is a community-driven application that allows people to share their acts of kindness, creating inspiration and encouraging more positive actions in the world. Whether it's helping a neighbor, volunteering, or simply brightening someone's day, every act of service matters.
+An anonymous community platform for sharing acts of service and kindness. Share your stories and be inspired by others - all while staying completely anonymous.
 
 ## Features
 
-- **Share Acts of Kindness**: Post and share your good deeds with the community
-- **Like and Comment**: Engage with others' stories and show appreciation
-- **Community Building**: Create a positive network of people committed to helping others
-- **Database of Kindness**: A growing collection of inspiring acts of service
+- 🔒 **Completely Anonymous** - No sign-ups, no authentication required
+- 💝 **Beautiful UI** - Clean, modern interface built with shadcn/ui
+- 📱 **Responsive Design** - Works perfectly on all devices
+- ⚡ **Minimal Tech Stack** - Simple and lightweight
+- 🌟 **Inspirational** - Read and share stories of kindness
+
+## Tech Stack
+
+- **Frontend**: Next.js 15 with TypeScript
+- **UI Components**: shadcn/ui with Tailwind CSS
+- **Database**: SQLite with better-sqlite3
+- **Styling**: Tailwind CSS with custom gradients
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- npm or yarn package manager
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd acts-of-service
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Seed the database with sample data** (optional)
+   ```bash
+   node scripts/seed.js
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Usage
+
+### Viewing Acts of Kindness
+- Browse through the beautiful card-based feed
+- Each post shows the content and how long ago it was shared
+- All posts are completely anonymous with randomly generated avatars
+
+### Sharing Your Story
+1. Click the "Share Kindness" button
+2. Write about your act of kindness or service
+3. Submit anonymously - no personal information required
+4. Your story will appear in the feed for others to read and be inspired
+
+## Database Schema
+
+The application uses a simple SQLite database with one table:
+
+```sql
+CREATE TABLE acts_of_service (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  content TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
 
 ## Project Structure
 
 ```
-ARK/
-├── acts-of-service/    # Next.js application
-├── src/                # Source code and utilities
-│   ├── app/            # App router components
-│   └── lib/            # Utility functions and database operations
-└── scripts/            # Helper scripts
+src/
+├── app/
+│   ├── api/acts/route.ts    # API endpoints for CRUD operations
+│   ├── layout.tsx           # Root layout with metadata
+│   ├── page.tsx             # Main page component
+│   └── globals.css          # Global styles
+├── components/ui/           # shadcn/ui components
+├── lib/
+│   ├── database.ts          # Database connection and queries
+│   ├── time.ts              # Time formatting utilities
+│   └── utils.ts             # General utilities
+└── scripts/
+    └── seed.js              # Database seeding script
 ```
 
-## Getting Started
+## API Endpoints
 
-1. Clone this repository
-2. Navigate to the `acts-of-service` directory
-3. Install dependencies: `npm install`
-4. Run the development server: `npm run dev`
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+- `GET /api/acts` - Retrieve all acts of kindness
+- `POST /api/acts` - Create a new act of kindness
+
+## Development
+
+### Adding New Components
+
+The project uses shadcn/ui components. To add new components:
+
+```bash
+npx shadcn@latest add [component-name]
+```
+
+### Database Management
+
+The SQLite database file (`acts-of-service.db`) is created automatically when you first run the application. To reset the database, simply delete the file and restart the server.
+
+### Customization
+
+- **Colors**: Modify the color scheme in `src/app/globals.css`
+- **UI Components**: Customize shadcn/ui components in `src/components/ui/`
+- **Styling**: Update Tailwind classes throughout the components
 
 ## Contributing
 
-We welcome contributions! Whether it's:
-- Adding new features
-- Improving the UI/UX
-- Fixing bugs
-- Adding more sample acts of kindness
+This project welcomes contributions! Here are some ways you can help:
 
-Feel free to open an issue or submit a pull request.
+- 🐛 Report bugs or issues
+- 💡 Suggest new features
+- 🎨 Improve the UI/UX
+- 📖 Improve documentation
+- ⚡ Optimize performance
 
-## Mission
+## License
 
-Our mission is to create a positive ripple effect by celebrating and encouraging acts of kindness, no matter how small. Together, we can make the world a better place, one act of service at a time.
+This project is open source and available under the [MIT License](LICENSE).
+
+## Inspiration
+
+> "No act of kindness, no matter how small, is ever wasted." - Aesop
+
+This platform was created to celebrate and encourage acts of kindness in our communities. Every small gesture matters, and by sharing our stories, we can inspire others to spread kindness too.
 
 ---
 
-*"No act of kindness, no matter how small, is ever wasted." - Aesop* 
+**Made with 💙 for spreading kindness in the world.**
