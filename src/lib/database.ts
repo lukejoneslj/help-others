@@ -110,4 +110,6 @@ export function getCommentCount(actId: number): number {
   const result = database.prepare('SELECT COUNT(*) as count FROM comments WHERE act_id = ?').get(actId);
   
   return (result as { count: number }).count;
-} 
+}
+
+export default db; 
