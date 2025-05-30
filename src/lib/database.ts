@@ -16,7 +16,7 @@ export function getDatabase() {
     return db;
   }
 
-  const dbPath = path.join(process.cwd(), 'acts_of_service.db');
+  const dbPath = path.join(process.cwd(), 'acts-of-service.db');
   
   db = new Database(dbPath);
 
