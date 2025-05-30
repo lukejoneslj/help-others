@@ -65,8 +65,9 @@ export function getAllActs(): ActOfService[] {
 
 export function createAct(content: string): ActOfService {
   const database = getDatabase();
-  const insert = database.prepare('INSERT INTO acts_of_service (content, hearts) VALUES (?, 0)');
-  const result = insert.run(content);
+  const now = new Date().toISOString();
+  const insert = database.prepare('INSERT INTO acts_of_service (content, hearts, created_at) VALUES (?, 0, ?)');
+  const result = insert.run(content, now);
   
   const newAct = database.prepare('SELECT * FROM acts_of_service WHERE id = ?').get(result.lastInsertRowid);
   
@@ -97,8 +98,9 @@ export function getCommentsByActId(actId: number): Comment[] {
 
 export function createComment(actId: number, content: string): Comment {
   const database = getDatabase();
-  const insert = database.prepare('INSERT INTO comments (act_id, content) VALUES (?, ?)');
-  const result = insert.run(actId, content);
+  const now = new Date().toISOString();
+  const insert = database.prepare('INSERT INTO comments (act_id, content, created_at) VALUES (?, ?, ?)');
+  const result = insert.run(actId, content, now);
   
   const newComment = database.prepare('SELECT * FROM comments WHERE id = ?').get(result.lastInsertRowid);
   

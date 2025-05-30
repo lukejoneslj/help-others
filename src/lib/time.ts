@@ -1,5 +1,25 @@
 export function formatTimeAgo(dateString: string): string {
-  const date = new Date(dateString);
+  // Handle both SQLite format (YYYY-MM-DD HH:MM:SS) and ISO format
+  let date: Date;
+  
+  if (dateString.includes('T')) {
+    // ISO format (e.g., "2025-05-30T19:20:54.123Z")
+    date = new Date(dateString);
+  } else {
+    // SQLite format (e.g., "2025-05-30 19:20:54") - add 'Z' to treat as UTC
+    date = new Date(dateString + 'Z');
+  }
+  
+  // Fallback: if date is invalid, try parsing as-is
+  if (isNaN(date.getTime())) {
+    date = new Date(dateString);
+  }
+  
+  // If still invalid, return a fallback
+  if (isNaN(date.getTime())) {
+    return 'unknown time';
+  }
+  
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
