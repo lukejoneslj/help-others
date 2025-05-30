@@ -1,143 +1,144 @@
-# Kindness Network 💙
+# Help Others 🤝
 
-An anonymous community platform for sharing acts of service and kindness. Share your stories and be inspired by others - all while staying completely anonymous.
+An anonymous community platform for sharing acts of service and helping others. Share your stories and be inspired by others - all while staying completely anonymous.
 
-## Features
+## ✨ Features
 
-- 🔒 **Completely Anonymous** - No sign-ups, no authentication required
-- 💝 **Beautiful UI** - Clean, modern interface built with shadcn/ui
-- 📱 **Responsive Design** - Works perfectly on all devices
-- ⚡ **Minimal Tech Stack** - Simple and lightweight
-- 🌟 **Inspirational** - Read and share stories of kindness
+- 📝 **Anonymous Sharing** - No accounts needed, just share your story
+- 💝 **Hearts System** - Show appreciation for inspiring stories  
+- 💬 **Comments** - Engage with stories anonymously
+- 🌟 **Inspirational** - Read and share stories of helping others
+- 📱 **Mobile Responsive** - Works perfectly on all devices
+- 🎨 **Beautiful UI** - Clean, modern design with smooth animations
+- ⚡ **Real-time Updates** - See new stories and interactions instantly
+- 🔒 **Privacy First** - No personal data collection, completely anonymous
 
-## Tech Stack
+## 🚀 Tech Stack
 
-- **Frontend**: Next.js 15 with TypeScript
-- **UI Components**: shadcn/ui with Tailwind CSS
+- **Frontend**: Next.js 15 with React 18
+- **Styling**: Tailwind CSS with custom animations
 - **Database**: SQLite with better-sqlite3
-- **Styling**: Tailwind CSS with custom gradients
+- **UI Components**: Custom components with Radix UI primitives
+- **Markdown**: Rich text formatting support
+- **TypeScript**: Full type safety
 
-## Getting Started
+## 📱 Usage
+
+### Sharing Your Story
+
+1. Visit the homepage
+2. Click the "Share" button (+ icon)
+3. Write your story using the rich text editor
+4. Format your text with **bold**, *italic*, headings, and lists
+5. Click "Share Story" to publish anonymously
+
+### Engaging with Stories
+
+- **Hearts**: Click the heart button to show appreciation
+- **Comments**: Click the comment button to add your thoughts
+- **Formatting**: Use markdown in comments too!
+
+### Viewing Acts of Service
+
+- Stories are displayed in chronological order (newest first)
+- Each story shows hearts and comment count
+- Anonymous avatars and usernames are generated for each story
+- Time stamps show relative time (e.g., "2 hours ago")
+
+### Adding Comments
+
+1. Click the "Share" button on any story
+2. Write about how you helped someone or were helped
+3. Use formatting to make your story engaging
+4. Submit to share with the community
+
+## 🛠️ Development
 
 ### Prerequisites
 
-- Node.js 18+ installed
-- npm or yarn package manager
+- Node.js 18 or later
+- npm or yarn
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd acts-of-service
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Seed the database with sample data** (optional)
-   ```bash
-   node scripts/seed.js
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## Usage
-
-### Viewing Acts of Kindness
-- Browse through the beautiful card-based feed
-- Each post shows the content and how long ago it was shared
-- All posts are completely anonymous with randomly generated avatars
-
-### Sharing Your Story
-1. Click the "Share Kindness" button
-2. Write about your act of kindness or service
-3. Submit anonymously - no personal information required
-4. Your story will appear in the feed for others to read and be inspired
-
-## Database Schema
-
-The application uses a simple SQLite database with one table:
-
-```sql
-CREATE TABLE acts_of_service (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  content TEXT NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── api/acts/route.ts    # API endpoints for CRUD operations
-│   ├── layout.tsx           # Root layout with metadata
-│   ├── page.tsx             # Main page component
-│   └── globals.css          # Global styles
-├── components/ui/           # shadcn/ui components
-├── lib/
-│   ├── database.ts          # Database connection and queries
-│   ├── time.ts              # Time formatting utilities
-│   └── utils.ts             # General utilities
-└── scripts/
-    └── seed.js              # Database seeding script
-```
-
-## API Endpoints
-
-- `GET /api/acts` - Retrieve all acts of kindness
-- `POST /api/acts` - Create a new act of kindness
-
-## Development
-
-### Adding New Components
-
-The project uses shadcn/ui components. To add new components:
-
 ```bash
-npx shadcn@latest add [component-name]
+# Clone the repository
+git clone [repository-url]
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
 ```
 
-### Database Management
+The app will be available at `http://localhost:3000`.
 
-The SQLite database file (`acts-of-service.db`) is created automatically when you first run the application. To reset the database, simply delete the file and restart the server.
+### Database Setup
 
-### Customization
+The SQLite database is automatically created on first run. The schema includes:
 
-- **Colors**: Modify the color scheme in `src/app/globals.css`
-- **UI Components**: Customize shadcn/ui components in `src/components/ui/`
-- **Styling**: Update Tailwind classes throughout the components
+- `acts_of_service` table for storing stories
+- `comments` table for story comments
+- Automatic migrations for schema updates
 
-## Contributing
+## 📊 API Endpoints
 
-This project welcomes contributions! Here are some ways you can help:
+- `GET /api/acts` - Retrieve all acts of service
+- `POST /api/acts` - Create a new act of service
+- `GET /api/acts/[id]/comments` - Get comments for a specific act
+- `POST /api/acts/[id]/comments` - Add a comment to an act
+- `POST /api/acts/[id]/like` - Like/unlike an act
 
-- 🐛 Report bugs or issues
-- 💡 Suggest new features
-- 🎨 Improve the UI/UX
-- 📖 Improve documentation
-- ⚡ Optimize performance
+### Request/Response Examples
 
-## License
+```javascript
+// Create a new act
+POST /api/acts
+{
+  "content": "Today I helped my neighbor carry groceries up three flights of stairs..."
+}
 
-This project is open source and available under the [MIT License](LICENSE).
+// Add a comment
+POST /api/acts/1/comments
+{
+  "content": "This is so heartwarming! Thank you for sharing."
+}
 
-## Inspiration
+// Like an act
+POST /api/acts/1/like
+{
+  "hearts": 5
+}
+```
 
-> "No act of kindness, no matter how small, is ever wasted." - Aesop
+## 🎨 Customization
 
-This platform was created to celebrate and encourage acts of kindness in our communities. Every small gesture matters, and by sharing our stories, we can inspire others to spread kindness too.
+### Styling
 
----
+The app uses Tailwind CSS with custom color schemes:
+- Primary: Blue gradient (blue-600 to indigo-600)
+- Backgrounds: Subtle gradients and backdrop blur effects
+- Cards: Clean white backgrounds with subtle shadows
 
-**Made with 💙 for spreading kindness in the world.**
+### Database
+
+SQLite database with the following tables:
+- `acts_of_service`: id, content, hearts, created_at
+- `comments`: id, act_id, content, created_at
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 💝 Inspiration
+
+> "No act of service, no matter how small, is ever wasted." - Inspired by Aesop
+
+This platform was created to celebrate and encourage acts of helping others in our communities. Every small gesture matters, and by sharing our stories, we can inspire others to help people too.
+
+## 🌟 Contributing
+
+We welcome contributions! Feel free to submit issues, feature requests, or pull requests.
+
+**Made with 💙 for spreading helpfulness and community support in the world.**

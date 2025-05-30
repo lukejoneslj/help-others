@@ -1,17 +1,4 @@
-const Database = require('better-sqlite3');
-const path = require('path');
-
-const dbPath = path.join(process.cwd(), 'acts-of-service.db');
-const db = new Database(dbPath);
-
-// Create the table if it doesn't exist
-db.exec(`
-  CREATE TABLE IF NOT EXISTS acts_of_service (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    content TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )
-`);
+import { createAct } from './database';
 
 const sampleActs = [
   "Helped an elderly neighbor carry groceries up three flights of stairs. She was so grateful and it only took 5 minutes of my day.",
@@ -26,18 +13,17 @@ const sampleActs = [
   "Helped a mom struggling with strollers and bags get through a heavy door at the mall. She looked so overwhelmed and grateful for the small help."
 ];
 
-console.log('Seeding database with sample acts of helping others...');
-
-const insertStmt = db.prepare('INSERT INTO acts_of_service (content) VALUES (?)');
-
-sampleActs.forEach((act, index) => {
-  try {
-    insertStmt.run(act);
-    console.log(`✓ Added sample act ${index + 1}`);
-  } catch (error) {
-    console.error(`✗ Failed to add sample act ${index + 1}:`, error);
-  }
-});
-
-console.log('Database seeding completed!');
-db.close(); 
+export function seedDatabase() {
+  console.log('Seeding database with sample acts of helping others...');
+  
+  sampleActs.forEach((act, index) => {
+    try {
+      createAct(act);
+      console.log(`✓ Added sample act ${index + 1}`);
+    } catch (error) {
+      console.error(`✗ Failed to add sample act ${index + 1}:`, error);
+    }
+  });
+  
+  console.log('Database seeding completed!');
+} 

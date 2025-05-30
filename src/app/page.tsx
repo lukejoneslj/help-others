@@ -248,7 +248,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-700 bg-clip-text text-transparent">
-                  Kindness Network
+                  Help Others 🤝
                 </h1>
                 <p className="text-xs text-slate-500">Share moments that matter</p>
               </div>
@@ -281,7 +281,7 @@ export default function Home() {
                   <div className="text-2xl">✨</div>
                   <div>
                     <h2 className="text-lg font-semibold text-slate-800">Share Your Story</h2>
-                    <p className="text-sm text-slate-600">Tell us about an act of kindness - yours or someone else&apos;s</p>
+                    <p className="text-sm text-slate-600">Tell us about how you helped someone or were helped</p>
                   </div>
                 </div>
                 <Button
@@ -368,7 +368,7 @@ export default function Home() {
                   data-main-textarea
                   value={newAct}
                   onChange={(e) => setNewAct(e.target.value)}
-                  placeholder="Today, I witnessed/experienced an amazing act of kindness...
+                  placeholder="Today, I helped someone amazing / someone helped me in an incredible way...
 
 **Try using formatting!** You can make text *italic* or **bold**, create lists:
 - First amazing thing
@@ -498,7 +498,7 @@ Share your story in detail! ✨"
                               ...prev,
                               [act.id]: e.target.value
                             }))}
-                            placeholder="Share your thoughts on this act of kindness... (You can use *formatting* too!)"
+                            placeholder="Share your thoughts on this story of helping others... (You can use *formatting* too!)"
                             className="min-h-[80px] resize-none border-slate-200 focus:border-blue-400 focus:ring-blue-400"
                             maxLength={1000}
                           />
@@ -552,7 +552,7 @@ Share your story in detail! ✨"
 
                     {comments[act.id]?.length === 0 && (
                       <div className="text-center py-4 text-gray-500 text-sm">
-                        Be the first to comment on this act of kindness! 💝
+                        Be the first to comment on this story of helping others! 💝
                       </div>
                     )}
                   </div>
@@ -566,9 +566,9 @@ Share your story in detail! ✨"
         {acts.length === 0 && (
           <div className="text-center py-16 bg-white/70 backdrop-blur-sm rounded-3xl border border-slate-200">
             <div className="text-6xl mb-4">🌟</div>
-            <h3 className="text-2xl font-bold text-slate-800 mb-2">Start the Kindness Wave</h3>
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">Start the Helping Wave</h3>
             <p className="text-slate-600 mb-6 max-w-md mx-auto">
-              Be the first to share a story of kindness and inspire others to spread positivity!
+              Be the first to share a story of helping others and inspire more acts of service!
             </p>
             <Button 
               onClick={() => setShowForm(true)}
