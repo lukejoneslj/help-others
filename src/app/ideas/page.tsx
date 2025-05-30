@@ -11,6 +11,7 @@ import { formatTimeAgo } from '@/lib/time';
 interface UserIdea {
   id: number;
   content: string;
+  hearts: number;
   created_at: string;
 }
 
@@ -142,6 +143,7 @@ export default function IdeasPage() {
   const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [newIdea, setNewIdea] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [likedIdeas, setLikedIdeas] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     fetchUserIdeas();
@@ -182,6 +184,42 @@ export default function IdeasPage() {
       console.error('Error submitting idea:', error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleLikeIdea = async (ideaId: number) => {
+    const isCurrentlyLiked = likedIdeas.has(ideaId);
+    const newLikedIdeas = new Set(likedIdeas);
+    
+    if (isCurrentlyLiked) {
+      newLikedIdeas.delete(ideaId);
+    } else {
+      newLikedIdeas.add(ideaId);
+    }
+    setLikedIdeas(newLikedIdeas);
+
+    try {
+      const response = await fetch(`/api/ideas/${ideaId}/like`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ liked: !isCurrentlyLiked }),
+      });
+
+      if (response.ok) {
+        const { hearts } = await response.json();
+        setUserIdeas(userIdeas.map(idea => 
+          idea.id === ideaId ? { ...idea, hearts } : idea
+        ));
+      } else {
+        // Revert on error
+        setLikedIdeas(likedIdeas);
+      }
+    } catch (error) {
+      console.error('Error updating like:', error);
+      // Revert on error
+      setLikedIdeas(likedIdeas);
     }
   };
 
@@ -236,10 +274,22 @@ export default function IdeasPage() {
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">💡</div>
           <h2 className="text-3xl font-bold text-slate-800 mb-4">Small Acts, Big Impact</h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-6">
             Sometimes we want to help but don't know where to start. Here are simple, meaningful ways 
             to brighten someone's day and spread kindness in your community.
           </p>
+          {/* Prominent Share Button */}
+          <div className="mb-8">
+            <Button
+              onClick={() => setShowSubmitForm(true)}
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 rounded-full px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Share Your Idea to Help Others
+            </Button>
+            <p className="text-sm text-slate-500 mt-2">Have a simple way to help? Add it to our community collection!</p>
+          </div>
         </div>
 
         {/* Submission Form */}
@@ -357,8 +407,23 @@ export default function IdeasPage() {
                     >
                       <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 group-hover:bg-purple-500 transition-colors"></div>
                       <div className="flex-1">
-                        <span className="text-slate-700 text-sm leading-relaxed block mb-1">{idea.content}</span>
-                        <span className="text-xs text-slate-400">Shared {formatTimeAgo(idea.created_at)}</span>
+                        <span className="text-slate-700 text-sm leading-relaxed block mb-2">{idea.content}</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-slate-400">Shared {formatTimeAgo(idea.created_at)}</span>
+                          <button
+                            onClick={() => handleLikeIdea(idea.id)}
+                            className={`flex items-center space-x-1 px-2 py-1 rounded-full transition-all duration-200 ${
+                              likedIdeas.has(idea.id)
+                                ? 'bg-red-100 text-red-600'
+                                : 'hover:bg-purple-100 text-slate-600'
+                            }`}
+                          >
+                            <Heart 
+                              className={`w-4 h-4 ${likedIdeas.has(idea.id) ? 'fill-current' : ''}`} 
+                            />
+                            <span className="text-xs font-medium">{idea.hearts}</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}

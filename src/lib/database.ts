@@ -38,6 +38,7 @@ export function getDatabase() {
     CREATE TABLE IF NOT EXISTS user_ideas (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       content TEXT NOT NULL,
+      hearts INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
@@ -45,6 +46,13 @@ export function getDatabase() {
   // Add hearts column to existing tables if it doesn't exist
   try {
     db.exec(`ALTER TABLE acts_of_service ADD COLUMN hearts INTEGER DEFAULT 0`);
+  } catch {
+    // Column might already exist, ignore error
+  }
+
+  // Add hearts column to user_ideas if it doesn't exist
+  try {
+    db.exec(`ALTER TABLE user_ideas ADD COLUMN hearts INTEGER DEFAULT 0`);
   } catch {
     // Column might already exist, ignore error
   }
@@ -69,6 +77,7 @@ export interface Comment {
 export interface UserIdea {
   id: number;
   content: string;
+  hearts: number;
   created_at: string;
 }
 
@@ -138,12 +147,20 @@ export function getAllUserIdeas(): UserIdea[] {
 export function createUserIdea(content: string): UserIdea {
   const database = getDatabase();
   const now = new Date().toISOString();
-  const insert = database.prepare('INSERT INTO user_ideas (content, created_at) VALUES (?, ?)');
+  const insert = database.prepare('INSERT INTO user_ideas (content, hearts, created_at) VALUES (?, 0, ?)');
   const result = insert.run(content, now);
   
   const newIdea = database.prepare('SELECT * FROM user_ideas WHERE id = ?').get(result.lastInsertRowid);
   
   return newIdea as UserIdea;
+}
+
+export function updateUserIdeaHearts(ideaId: number, hearts: number): boolean {
+  const database = getDatabase();
+  const update = database.prepare('UPDATE user_ideas SET hearts = ? WHERE id = ?');
+  const result = update.run(hearts, ideaId);
+  
+  return result.changes > 0;
 }
 
 export default db; 
