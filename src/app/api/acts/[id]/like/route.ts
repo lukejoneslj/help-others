@@ -16,7 +16,7 @@ export async function POST(
       );
     }
 
-    const act = getActById(actId);
+    const act = await getActById(actId);
     if (!act) {
       return NextResponse.json(
         { error: 'Act not found' },
@@ -27,7 +27,7 @@ export async function POST(
     const { liked } = await request.json();
     const newHearts = liked ? act.hearts + 1 : Math.max(0, act.hearts - 1);
     
-    const success = updateHearts(actId, newHearts);
+    const success = await updateHearts(actId, newHearts);
     
     if (!success) {
       return NextResponse.json(

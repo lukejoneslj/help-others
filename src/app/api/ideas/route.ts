@@ -3,7 +3,7 @@ import { getAllUserIdeas, createUserIdea } from '@/lib/database';
 
 export async function GET() {
   try {
-    const ideas = getAllUserIdeas();
+    const ideas = await getAllUserIdeas();
     return NextResponse.json(ideas);
   } catch (error) {
     console.error('Error fetching user ideas:', error);
@@ -27,12 +27,12 @@ export async function POST(request: NextRequest) {
 
     if (content.length > 500) {
       return NextResponse.json(
-        { error: 'Content must be 500 characters or less' },
+        { error: 'Idea must be 500 characters or less' },
         { status: 400 }
       );
     }
 
-    const newIdea = createUserIdea(content.trim());
+    const newIdea = await createUserIdea(content.trim());
     return NextResponse.json(newIdea, { status: 201 });
   } catch (error) {
     console.error('Error creating user idea:', error);

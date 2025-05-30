@@ -18,7 +18,7 @@ export async function POST(
     }
 
     // Get current ideas to find the target idea
-    const ideas = getAllUserIdeas();
+    const ideas = await getAllUserIdeas();
     const targetIdea = ideas.find(idea => idea.id === ideaId);
 
     if (!targetIdea) {
@@ -30,7 +30,7 @@ export async function POST(
 
     // Update hearts count
     const newHearts = liked ? targetIdea.hearts + 1 : Math.max(0, targetIdea.hearts - 1);
-    const success = updateUserIdeaHearts(ideaId, newHearts);
+    const success = await updateUserIdeaHearts(ideaId, newHearts);
 
     if (!success) {
       return NextResponse.json(

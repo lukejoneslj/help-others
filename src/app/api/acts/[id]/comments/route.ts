@@ -16,7 +16,7 @@ export async function GET(
       );
     }
 
-    const comments = getCommentsByActId(actId);
+    const comments = await getCommentsByActId(actId);
     return NextResponse.json(comments);
   } catch (error) {
     console.error('Error fetching comments:', error);
@@ -43,7 +43,7 @@ export async function POST(
     }
 
     // Check if the act exists
-    const act = getActById(actId);
+    const act = await getActById(actId);
     if (!act) {
       return NextResponse.json(
         { error: 'Act not found' },
@@ -67,7 +67,7 @@ export async function POST(
       );
     }
 
-    const newComment = createComment(actId, content.trim());
+    const newComment = await createComment(actId, content.trim());
     return NextResponse.json(newComment, { status: 201 });
   } catch (error) {
     console.error('Error creating comment:', error);

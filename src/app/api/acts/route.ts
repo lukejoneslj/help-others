@@ -3,7 +3,7 @@ import { getAllActs, createAct } from '@/lib/database';
 
 export async function GET() {
   try {
-    const acts = getAllActs();
+    const acts = await getAllActs();
     return NextResponse.json(acts);
   } catch (error) {
     console.error('Error fetching acts:', error);
@@ -25,14 +25,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (content.length > 3000) {
+    if (content.length > 1000) {
       return NextResponse.json(
-        { error: 'Content must be 3000 characters or less' },
+        { error: 'Content must be 1000 characters or less' },
         { status: 400 }
       );
     }
 
-    const newAct = createAct(content.trim());
+    const newAct = await createAct(content.trim());
     return NextResponse.json(newAct, { status: 201 });
   } catch (error) {
     console.error('Error creating act:', error);
