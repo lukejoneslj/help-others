@@ -3,10 +3,11 @@ import { getAllUserIdeas, updateUserIdeaHearts } from '@/lib/database';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const ideaId = parseInt(params.id);
+    const { id } = await params;
+    const ideaId = parseInt(id);
     const { liked } = await request.json();
 
     if (isNaN(ideaId)) {
