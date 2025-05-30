@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Heart, Users, Home, MessageCircle, Gift, Coffee, Book, Smartphone, Car, Lightbulb, HandHeart, Plus, X, Send } from 'lucide-react';
+import { ArrowLeft, Heart, Users, Home, Gift, Coffee, Book, Smartphone, Car, Lightbulb, HandHeart, Plus, X, Send } from 'lucide-react';
 import Link from 'next/link';
 import { formatTimeAgo } from '@/lib/time';
 
@@ -36,7 +36,7 @@ const ideas = [
     icon: <Users className="w-6 h-6" />,
     color: "from-blue-500 to-indigo-500",
     suggestions: [
-      "Shovel snow from a neighbor's walkway",
+      "Shovel snow from a neighbor&apos;s walkway",
       "Offer to pick up groceries for elderly neighbors",
       "Volunteer at a local food bank",
       "Participate in community cleanup events",
@@ -52,7 +52,7 @@ const ideas = [
     color: "from-green-500 to-emerald-500",
     suggestions: [
       "Do an extra chore without being asked",
-      "Cook a meal for someone who's stressed",
+      "Cook a meal for someone who&apos;s stressed",
       "Listen without trying to fix their problems",
       "Offer to babysit for overwhelmed parents",
       "Help with homework or projects",
@@ -66,14 +66,14 @@ const ideas = [
     icon: <Smartphone className="w-6 h-6" />,
     color: "from-purple-500 to-violet-500",
     suggestions: [
-      "Share someone's small business on social media",
+      "Share someone&apos;s small business on social media",
       "Send an encouraging message to someone struggling",
       "Post something uplifting instead of complaining",
       "Help someone learn new technology",
       "Connect two people who should know each other",
-      "Leave kind comments on people's posts",
+      "Leave kind comments on people&apos;s posts",
       "Share helpful resources or articles",
-      "Offer to help with someone's online presence"
+      "Offer to help with someone&apos;s online presence"
     ]
   },
   {
@@ -96,11 +96,11 @@ const ideas = [
     icon: <Gift className="w-6 h-6" />,
     color: "from-cyan-500 to-teal-500",
     suggestions: [
-      "Pay for someone's coffee behind you",
+      "Pay for someone&apos;s coffee behind you",
       "Leave quarters at a laundromat",
       "Give up your parking spot to someone circling",
       "Help someone with directions",
-      "Carry someone's luggage up stairs",
+      "Carry someone&apos;s luggage up stairs",
       "Offer your phone charger to someone in need",
       "Help someone change a flat tire",
       "Give your umbrella to someone in the rain"
@@ -132,7 +132,7 @@ const ideas = [
       "Let someone merge in traffic gracefully",
       "Help with directions or navigation",
       "Offer to pick up something for someone",
-      "Help carry groceries to someone's car",
+      "Help carry groceries to someone&apos;s car",
       "Share travel tips and recommendations"
     ]
   }
@@ -223,8 +223,7 @@ export default function IdeasPage() {
     }
   };
 
-  const totalBuiltInIdeas = ideas.reduce((total, category) => total + category.suggestions.length, 0);
-  const totalIdeas = totalBuiltInIdeas + userIdeas.length;
+  const totalIdeas = ideas.reduce((sum, category) => sum + category.suggestions.length, 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
@@ -247,7 +246,7 @@ export default function IdeasPage() {
                   <h1 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-indigo-700 bg-clip-text text-transparent">
                     Ideas to Help Others
                   </h1>
-                  <p className="text-xs text-slate-500">Simple ways to make someone's day better</p>
+                  <p className="text-xs text-slate-500">Simple ways to make someone&apos;s day better</p>
                 </div>
               </div>
             </div>
@@ -275,8 +274,8 @@ export default function IdeasPage() {
           <div className="text-6xl mb-4">💡</div>
           <h2 className="text-3xl font-bold text-slate-800 mb-4">Small Acts, Big Impact</h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-6">
-            Sometimes we want to help but don't know where to start. Here are simple, meaningful ways 
-            to brighten someone's day and spread kindness in your community.
+            Sometimes we want to help but don&apos;t know where to start. Here are simple, meaningful ways 
+            to brighten someone&apos;s day and spread kindness in your community.
           </p>
           {/* Prominent Share Button */}
           <div className="mb-8">
@@ -309,7 +308,7 @@ export default function IdeasPage() {
                 <Textarea
                   value={newIdea}
                   onChange={(e) => setNewIdea(e.target.value)}
-                  placeholder="Share a simple way to help others... For example: 'Leave a kind note in a library book' or 'Offer to take a photo for tourists' or 'Bring extra snacks to share at work'..."
+                  placeholder="Share a simple way to help others... For example: &apos;Leave a kind note in a library book&apos; or &apos;Offer to take a photo for tourists&apos; or &apos;Bring extra snacks to share at work&apos;..."
                   className="min-h-[120px] resize-none border-purple-200 focus:border-purple-400 focus:ring-purple-400"
                   maxLength={500}
                 />
@@ -463,7 +462,7 @@ export default function IdeasPage() {
         {/* Footer Quote */}
         <div className="mt-12 text-center">
           <blockquote className="text-lg italic text-slate-600 max-w-2xl mx-auto">
-            "No act of kindness, no matter how small, is ever wasted."
+            &quot;No act of kindness, no matter how small, is ever wasted.&quot;
           </blockquote>
           <cite className="text-sm text-slate-500 mt-2 block">— Aesop</cite>
         </div>
